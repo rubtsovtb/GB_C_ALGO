@@ -49,6 +49,29 @@ int toPower2(int a, int b) {
     }
 }
 
+//Для задания 5
+int routes(int x, int y)
+{
+    if (x==0 && y==0)
+    {
+        return 0;
+    }
+    //Добавляем условие препятствия (например, это офицер, который стоит в ячейке (8,8))
+    //else if (((x-1)==y)||(x==0 && y==1))
+    else if (((x)==y))
+    {
+        return 0;
+    }
+    else if (x==0 ^ y==0)
+    {
+        return 1;
+    }
+    else
+    {
+        return routes(x, y-1)+routes(x-1,y);
+    }
+}
+
 int main()
 {
     //Задание 1
@@ -67,6 +90,17 @@ int main()
     printf("The result of power raising 3 is: %d\n", toPower2(a, b));
 
     //Задание 5
+    const int sizeX = 8;
+    const int sizeY = 8;
+
+    for(int y=0; y<sizeY;++y)
+    {
+        for(int x=0; x<sizeX;++x)
+        {
+            printf("%5d", routes(x,y));
+        }
+        printf("\n");
+    }
 
     return 0;
 }
