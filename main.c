@@ -108,14 +108,72 @@ void selectSortMethod(int *arr, int first, int arrSize)
     }
 }
 
+//для задания 2
+void bucketSort(int* arr, int len)
+{
+    const int max = len;
+    const int b = 10;
+    const int maxDigit = 1000000000;
+    const int skipVal = -101;
+
+    int buckets[b][max+1];
+    //для удобства разбора обнуляем все значения
+    for(int i=0;i<b;++i)
+    {
+        for(int j=0; j<=max;++j)
+        {
+            buckets[i][j]=0;
+        }
+    }
+    for(int digit = 1; digit < maxDigit; digit*=b)
+    {
+        for (int i=0;i<max;++i)
+        {
+            if(arr[i]%2==0)
+            {
+                int d = (arr[i] / digit) % b;
+
+                //оставил для понимания написанного ниже
+                int counter = buckets[d][max];
+                buckets[d][counter]=arr[i];
+                counter++;
+                buckets[d][max]=counter;
+                //buckets[d][buckets[d][max]++]=arr[i];
+                arr[i]=skipVal;
+            }
+        }
+        int idx = 0;
+        for(int i=0;i<b;++i)
+        {
+            for(int j=0;j<buckets[i][max];++j)
+            {
+                while(arr[idx]!=skipVal)
+                {
+                    idx++;
+                }
+                arr[idx]=buckets[i][j];
+            }
+            buckets[i][max]=0;
+        }
+    }
+}
+
 int main()
 {
     //задание 1
+    printf("Task 1: \n");
     int arr[] = {10, 9, 1, 92, 1, 9, 3, 3, 6, 9, 3, 5, 6};
     //получаем размер массива
     int arrSize = sizeof(arr) / sizeof(arr[0]);
     selectSortMethod(arr, 0, arrSize);
     printf("Sorted array: \n");
     printArray(arr, arrSize);
+
+    //задание 2
+    printf("Task 2: \n");
+    int arr1[] = {0, 2, 8, 3, 4, 6, 5, 9, 8, 2, 7, 3};
+    int arrSize1 = sizeof(arr) / sizeof(arr[0]);
+    bucketSort(arr1,arrSize1);
+    printArray(arr1, arrSize1-1);
     return 0;
 }
