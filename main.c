@@ -114,7 +114,8 @@ void bucketSort(int* arr, int len)
     const int max = len;
     const int b = 10;
     const int maxDigit = 1000000000;
-    const int skipVal = -101;
+    //значения с этой пометкой мы сортируем
+    const int valToSort = -101;
 
     int buckets[b][max+1];
     //для удобства разбора обнуляем все значения
@@ -139,7 +140,7 @@ void bucketSort(int* arr, int len)
                 counter++;
                 buckets[d][max]=counter;
                 //buckets[d][buckets[d][max]++]=arr[i];
-                arr[i]=skipVal;
+                arr[i]=valToSort;
             }
         }
         int idx = 0;
@@ -147,7 +148,7 @@ void bucketSort(int* arr, int len)
         {
             for(int j=0;j<buckets[i][max];++j)
             {
-                while(arr[idx]!=skipVal)
+                while(arr[idx] != valToSort)
                 {
                     idx++;
                 }
